@@ -21,8 +21,7 @@ public class Generator : MonoBehaviour
                 float y = Mathf.Cos(angle) * radius * (i) * 1.1f;
                 GameObject g = GameObject.Instantiate<GameObject>(prefab);
                 g.transform.position = new Vector3(x, y, 0);
-                g.GetComponent<Renderer>().material.color =
-                    Color.HSVToRGB(j / (float) numPrefabs, 1, 1);
+                g.GetComponent<Renderer>().material.color = Color.HSVToRGB(j / (float) numPrefabs, 1, 1);
                 g.transform.parent = this.transform;
             }
         }

@@ -9,6 +9,7 @@ public class Fish : MonoBehaviour
     public Transform Head;
 
     [Range(0,5)]
+
     
     public int Frequency = 1;
 
