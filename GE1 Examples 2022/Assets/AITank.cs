@@ -13,7 +13,6 @@ public class AITank : MonoBehaviour {
     public Transform player; 
     public float explosionRadius = 1.0f;
     public int rings = 1;
-    public Vector3 pos;
 
 
     public void OnDrawGizmos()
@@ -35,7 +34,6 @@ public class AITank : MonoBehaviour {
                     pos = transform.TransformPoint(pos);
                     Gizmos.color = Color.white;
                     Gizmos.DrawWireSphere(pos, explosionRadius);
-                    //dod.transform.parent = this.transform;
                 }
             }
         }
@@ -44,25 +42,42 @@ public class AITank : MonoBehaviour {
     // Use this for initialization
     void Awake () 
     {
-        
+        float theta = Mathf.PI * 2.0f / (float) numWaypoints;   
         for(int i = 0 ; i < numWaypoints ; i ++)
         {
+            Vector3 pos = new Vector3(
+            Mathf.Cos(theta * i) * radius,
+            0,
+            Mathf.Sin(theta * i) * radius
+            );
+            pos = transform.TransformPoint(pos);
             waypoints.Add(pos); 
         }
-        // Task 2
-        // Put code here to calculate the waypoints in a loop and 
-        // Add them to the waypoints List
     }
 
     // Update is called once per frame
     void Update () {
-        // Task 3
-        // Put code here to move the tank towards the next waypoint
-        // When the tank reaches a waypoint you should advance to the next one
 
+        Vector3 tankpos = transform.position;
+        Vector3 nextpos = waypoints[current] - tankpos;
+
+        float dis = nextpos.magnitude;
+        if(dis < 1)
+        {
+          current = (current + 1) % waypoints.Count;
+        }
+        Vector3 direc = nextpos / dis;
+
+        transform.position = Vector3.Lerp(transform.position, waypoints[current], Time.deltaTime);
+    
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(nextpos, Vector3.up), 180 * Time.deltaTime);
+
+        //dod.transform.parent = this.transform;
 
         // Task 4
         // Put code here to check if the player is in front of or behine the tank
+        
         // Task 5
         // Put code here to calculate if the player is inside the field of view and in range
         // You can print stuff to the screen using:
