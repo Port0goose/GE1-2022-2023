@@ -13,6 +13,7 @@ public class AITank : MonoBehaviour {
     public Transform player; 
     public float explosionRadius = 1.0f;
     public int rings = 1;
+    public Vector3 pos;
 
 
     public void OnDrawGizmos()
@@ -36,20 +37,18 @@ public class AITank : MonoBehaviour {
                     Gizmos.DrawWireSphere(pos, explosionRadius);
                     //dod.transform.parent = this.transform;
                 }
-
             }
-            // Task 1
-            // Put code here to draw the gizmos
-            // Use sin and cos to calculate the positions of the waypoints 
-            // You can draw gizmos using
-            // Gizmos.color = Color.green;
-            // Gizmos.DrawWireSphere(pos, 1);
         }
     }
 
     // Use this for initialization
     void Awake () 
     {
+        
+        for(int i = 0 ; i < numWaypoints ; i ++)
+        {
+            waypoints.Add(pos); 
+        }
         // Task 2
         // Put code here to calculate the waypoints in a loop and 
         // Add them to the waypoints List
